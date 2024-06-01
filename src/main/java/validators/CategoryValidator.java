@@ -29,7 +29,7 @@ public class CategoryValidator {
             error.append("O Campo  está em branco!<br/>");
         else{
             try {
-                int idInt = Integer.parseInt(id);
+                Integer.parseInt(id);
             }catch (NumberFormatException e)
             {
                 System.err.println("ERRO: NUMERO DE ID INVALIDO!");
