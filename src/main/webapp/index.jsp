@@ -44,14 +44,14 @@
 
                     <form method="post" action="./login">
                         <div class="form-group">
-                            <% out.print("email");%>
+                        <%@ include file="partials/error-messages.jsp" %>
                         </div>
 
                         <div class="input-group mb-3">
                             <span class="input-group-text">
                                 <i class="bi bi-envelope"></i>
                             </span>
-                            <input type="email" required name="email" id="email" placeholder="E-mail"
+                            <input type="email"  name="email" id="email" placeholder="E-mail"
                                 class="form-control form-control-lg fs-6" />
                         </div>
 
@@ -59,17 +59,17 @@
                             <span class="input-group-text">
                                 <i class="bi bi-lock"></i>
                             </span>
-                            <input type="password" required name="password" id="password" placeholder="Palavra-passe"
+                            <input type="password"  name="password" id="password" placeholder="Palavra-passe"
                                 class="form-control form-control-lg fs-6" />
                         </div>
-
 
                         <div class="input-group mb-3 d-flex justify-content-end">
                             <div>
                                 <small><a href="/accounts/password-reset">Esqueceu a senha?</a></small>
                             </div>
                         </div>
-                        <!-- <a href="./views/administrator/home.html" class="btn btn-primary btn-lg w-100 mb-3">Login</a> -->
+
+                        <!-- <a href="./pages/administrator/home.html" class="btn btn-primary btn-lg w-100 mb-3">Login</a> -->
                         <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">Login</button>
                     </form>
 
