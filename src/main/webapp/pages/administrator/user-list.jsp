@@ -23,6 +23,7 @@
 
                         <div class="main-panel">
                             <main class="content-wrapper">
+                            <%@ include file="/partials/error-messages.jsp" %>
                                <h1>Lista de Usuário</h1>
 
                             </main>

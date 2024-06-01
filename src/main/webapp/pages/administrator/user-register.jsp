@@ -23,6 +23,7 @@
 
                         <div class="main-panel">
                             <main class="content-wrapper">
+                            <%@ include file="/partials/error-messages.jsp" %>
                                 <div class="row">
                                     <div
                                         class="col-10 col-sm-10 col-md-6 d-lg-6 d-xl-6 mx-auto col-md-6 grid-margin stretch-card">

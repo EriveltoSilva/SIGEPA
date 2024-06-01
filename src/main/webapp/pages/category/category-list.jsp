@@ -1,4 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.List" %>
+<%@ page import="models.CategoryModel" %>
+
     <!DOCTYPE html>
     <html lang="pt-AO">
 
@@ -23,6 +26,8 @@
 
                         <div class="main-panel">
                             <main class="content-wrapper">
+                            <%@ include file="/partials/error-messages.jsp" %>
+
                                 <div class="row">
                                     <div class="col-lg-12 grid-margin stretch-card">
                                         <div class="card">
@@ -35,7 +40,7 @@
                                                         </p>
                                                     </div>
                                                     <div>
-                                                        <a href="" class="btn btn-outline-primary">
+                                                        <a href="./category-new" class="btn btn-outline-primary">
                                                             <i class="bi bi-plus-circle"></i>
                                                             Nova Categoria
                                                         </a>
@@ -45,22 +50,28 @@
                                                     <table class="table table-striped">
                                                         <thead>
                                                             <tr>
+                                                                <th>Número</th>
                                                                 <th>Imagem</th>
                                                                 <th>Nome</th>
-                                                                <th>Quantidade de Produtos</th>
                                                                 <th>Criado a</th>
                                                                 <th>Ações</th>
                                                             </tr>
                                                         </thead>
 
                                                         <tbody>
+
+                                                        <%
+                                                            List<CategoryModel> categories = (List<CategoryModel>) request.getAttribute("categories");
+                                                            if (categories != null) {
+                                                                for (CategoryModel category : categories) {
+                                                        %>
                                                             <tr>
-                                                                <td class="py-1"> <img
-                                                                        src="assets/images/banner_12.jpg"
-                                                                        alt="image" /> </td>
-                                                                <td>Maça</td>
-                                                                <td>4</td>
-                                                                <td>01/06/2024</td>
+                                                                <td><%= category.getId() %></td>
+                                                                <td class="py-1">
+                                                                    <img src="assets/images/banner_12.jpg" alt="image" />
+                                                                </td>
+                                                                <td><%= category.getName() %></td>
+                                                                <td><%= category.getCreated_at() %></td>
                                                                 <td>
                                                                     <a title="Editar" href=""
                                                                         class="btn p-2 bg-primary text-light">
@@ -73,6 +84,18 @@
                                                                     </a>
                                                                 </td>
                                                             </tr>
+
+
+                                                         <%
+                                                                }
+                                                            } else {
+                                                        %>
+                                                            <tr>
+                                                                <td colspan="4">Sem categorias disponiveis.</td>
+                                                            </tr>
+                                                        <%
+                                                            }
+                                                        %>
                                                         </tbody>
 
                                                     </table>
