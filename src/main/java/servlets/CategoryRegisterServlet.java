@@ -40,7 +40,7 @@ public class CategoryRegisterServlet extends HttpServlet {
         }
 
         CategoryDAO categoryDAO = new CategoryDAO(connection);
-        if(categoryDAO.save(new CategoryModel(name, description))==0)
+        if(categoryDAO.save(new CategoryModel(name.trim(), description.trim()))==0)
             req.setAttribute("errorMessage", "Algo deu errado, categoria não gravada! Tente mais tarde!");
         else
             req.setAttribute("successMessage", "Categoria gravada com sucesso!");

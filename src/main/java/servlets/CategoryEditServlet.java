@@ -57,13 +57,12 @@ public class CategoryEditServlet extends HttpServlet {
             return ;
         }
         int idNumber = Integer.parseInt(id);
-
         CategoryDAO categoryDAO = new CategoryDAO(connection);
-        if(categoryDAO.update(new CategoryModel(idNumber, name, description))==0)
+        if(categoryDAO.update(new CategoryModel(idNumber, name.trim(), description.trim()))==0)
             req.setAttribute("errorMessage", "Algo deu errado, categoria não gravada! Tente mais tarde!");
         else
             req.setAttribute("successMessage", "Categoria gravada com sucesso!");
-        req.getRequestDispatcher("/category-list").forward(req, resp);
+        resp.sendRedirect(req.getContextPath() + "/category-list");
     }
 
     @Override
