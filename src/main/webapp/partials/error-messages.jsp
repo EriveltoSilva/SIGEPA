@@ -10,3 +10,16 @@
 <%
     }
 %>
+
+
+<%
+    String successMessage = (String) request.getAttribute("successMessage");
+    if (successMessage != null) {
+%>
+<div class="alert alert-success">
+    <%= successMessage %>
+</div>
+
+<%
+    }
+%>

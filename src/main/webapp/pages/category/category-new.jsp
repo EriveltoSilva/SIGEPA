@@ -23,6 +23,8 @@
 
                         <div class="main-panel">
                             <main class="content-wrapper">
+                            <%@ include file="/partials/error-messages.jsp" %>
+
                                 <div class="row">
                                     <div class="d-sm-none d-md-none col-12 col-sm-12 col-md-6 d-none d-lg-block d-lg-6">
                                         <img class="w-100 h-100" src="assets/images/banner_10.jpg"
@@ -36,7 +38,7 @@
                                                 <h4 class="card-title">Categoria de Produto - <span
                                                         class="badge badge-warning h3">Nova</span></h4>
 
-                                                <form class="forms-sample" method="post" action="">
+                                                <form class="forms-sample" method="post" action="./category-new">
                                                     <div class="form-group">
                                                         <label for="exampleInputUsername1">Nome</label>
                                                         <input type="text" name="name" class="form-control"
