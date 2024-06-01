@@ -19,4 +19,8 @@ public class CategoryModel {
         this.name = name;
         this.description = description;
     }
+    public  CategoryModel(Integer id, String name, String description){
+        this(name, description);
+        this.id=id;
+    }
 }
