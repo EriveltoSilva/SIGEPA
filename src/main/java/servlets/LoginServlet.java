@@ -34,6 +34,5 @@ public class LoginServlet extends HttpServlet {
         }
         // processar login
         resp.sendRedirect(req.getContextPath()+"/pages/administrator/dashboard.jsp");
-        //req.getRequestDispatcher("/pages/administrator/dashboard.jsp").forward(req, resp);
     }
 }

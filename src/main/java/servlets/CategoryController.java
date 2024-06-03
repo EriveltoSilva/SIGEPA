@@ -1,18 +1,21 @@
 package servlets;
 
+import dao.CategoryDAO;
 import db.PostgresConnectionSingleton;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import models.CategoryModel;
 import services.CategoryService;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
-@WebServlet(urlPatterns = {"/category-register", "/category-delete"})
+@WebServlet(urlPatterns = {"/category-register", "/category-list" ,"/category-delete"})
 public class CategoryController extends HttpServlet {
 
     private final Connection connection = PostgresConnectionSingleton.getInstance().getConnection();
@@ -24,13 +27,24 @@ public class CategoryController extends HttpServlet {
     }
 
     @Override
+    public void destroy() {
+        super.destroy();
+        try {
+            this.connection.close();
+        } catch (SQLException e) {
+            System.err.println("ERROR: Erro Fechando ao conexão ao destruir o CategoryController!");
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String command = req.getServletPath();
         switch (command){
-            case "/category-register":
-                System.out.println("GETTING CATEGORY NEW...");
-                req.getRequestDispatcher("/pages/category/category-register.jsp").forward(req, resp);break;
-
+            case "/category-register": categoryService.getRegister(req, resp);
+            case "/category-list": categoryService.getList(req, resp); break;
         }
     }
 
@@ -45,14 +59,5 @@ public class CategoryController extends HttpServlet {
     }
 
 
-    @Override
-    public void destroy() {
-        super.destroy();
-        try {
-            this.connection.close();
-        } catch (SQLException e) {
-            System.err.println("ERROR: Erro Fechando ao conexão ao destruir o CategoryController!");
-            throw new RuntimeException(e);
-        }
-    }
+
 }

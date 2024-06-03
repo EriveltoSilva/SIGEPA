@@ -9,6 +9,7 @@ import validators.CategoryValidator;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.List;
 
 public class CategoryService {
 
@@ -18,6 +19,18 @@ public class CategoryService {
         this.categoryDAO = new CategoryDAO(connection);
     }
 
+    public void getRegister(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("GETTING CATEGORY NEW...");
+        req.getRequestDispatcher( "/pages/category/category-register.jsp").forward(req, resp);
+    }
+
+    public void getList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("GETTING CATEGORY LIST...");
+        List<CategoryModel> list = categoryDAO.findAll();
+        req.setAttribute("categories", list);
+        req.getRequestDispatcher("/pages/category/category-list.jsp").forward(req, resp);
+    }
+    
     public void save(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         System.out.println("POSTTING CATEGORY REGISTER...");
