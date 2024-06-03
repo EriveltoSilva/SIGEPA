@@ -14,14 +14,14 @@ import java.util.List;
 public class CategoryService {
 
     private final CategoryDAO categoryDAO;
-    
-    public CategoryService(Connection connection){
+
+    public CategoryService(Connection connection) {
         this.categoryDAO = new CategoryDAO(connection);
     }
 
     public void getRegister(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("GETTING CATEGORY NEW...");
-        req.getRequestDispatcher( "/pages/category/category-register.jsp").forward(req, resp);
+        req.getRequestDispatcher("/pages/category/category-register.jsp").forward(req, resp);
     }
 
     public void getList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -30,7 +30,31 @@ public class CategoryService {
         req.setAttribute("categories", list);
         req.getRequestDispatcher("/pages/category/category-list.jsp").forward(req, resp);
     }
-    
+
+
+    public void getEdit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("GETTING CATEGORY EDIT...");
+        try {
+            int id = Integer.parseInt(req.getParameter("id"));
+            CategoryModel category = categoryDAO.findById(id);
+            if(category==null)
+                req.setAttribute("errorMessage", "Erro: Categoria de edição não existe!");
+
+            req.setAttribute("category", category);
+            req.getRequestDispatcher("/pages/category/category-edit.jsp").forward(req,resp);
+        }
+        catch (NumberFormatException e)
+        {
+            System.err.println("Erro: Falha ao converter o id da category em int:"+e.getMessage());
+            req.setAttribute("errorMessage", "Erro editando a categoria, tente mais tarde!");
+            req.getRequestDispatcher("/category-edit").forward(req, resp);
+            //resp.sendRedirect(req.getContextPath()+"/category-list");
+        }
+        //req.getRequestDispatcher("/pages/category/category-list.jsp").forward(req, resp);
+        resp.sendRedirect(req.getContextPath()+"/category-list");
+    }
+
+
     public void save(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         System.out.println("POSTTING CATEGORY REGISTER...");
@@ -51,6 +75,29 @@ public class CategoryService {
             req.setAttribute("successMessage", "Categoria gravada com sucesso!");
         req.getRequestDispatcher("/pages/category/category-register.jsp").forward(req, resp);
 
+    }
+
+
+
+    public void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("POSTTING CATEGORY EDIT...");
+        String id = req.getParameter("id");
+        String name = req.getParameter("name");
+        String description = req.getParameter("description");
+
+        String errorMessage = CategoryValidator.validateEdit(id, name, description);
+
+        if(errorMessage!=null){
+            req.setAttribute("errorMessage", errorMessage);
+            req.getRequestDispatcher("/category-edit").forward(req, resp);
+            return ;
+        }
+        int idNumber = Integer.parseInt(id);
+        if(categoryDAO.update(new CategoryModel(idNumber, name.trim(), description.trim()))==0)
+            req.setAttribute("errorMessage", "Algo deu errado, categoria não gravada! Tente mais tarde!");
+        else
+            req.setAttribute("successMessage", "Categoria gravada com sucesso!");
+        resp.sendRedirect(req.getContextPath() + "/category-list");
     }
 
     public void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

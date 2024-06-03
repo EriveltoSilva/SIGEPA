@@ -40,7 +40,7 @@
                                                         </p>
                                                     </div>
                                                     <div>
-                                                        <a href="./category-new" class="btn btn-outline-primary">
+                                                        <a href="./category-register" class="btn btn-outline-primary">
                                                             <i class="bi bi-plus-circle"></i>
                                                             Nova Categoria
                                                         </a>

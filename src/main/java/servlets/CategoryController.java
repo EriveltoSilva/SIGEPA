@@ -15,7 +15,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet(urlPatterns = {"/category-register", "/category-list" ,"/category-delete"})
+@WebServlet(urlPatterns = {"/category-register", "/category-list", "/category-edit", "/category-delete"})
 public class CategoryController extends HttpServlet {
 
     private final Connection connection = PostgresConnectionSingleton.getInstance().getConnection();
@@ -45,6 +45,7 @@ public class CategoryController extends HttpServlet {
         switch (command){
             case "/category-register": categoryService.getRegister(req, resp);
             case "/category-list": categoryService.getList(req, resp); break;
+            case "/category-edit": categoryService.getEdit(req, resp); break;
         }
     }
 
@@ -54,6 +55,7 @@ public class CategoryController extends HttpServlet {
         String command = req.getServletPath();
         switch (command){
             case "/category-register": categoryService.save(req, resp); break;
+            case "/category-edit": categoryService.update(req, resp); break;
             case "/category-delete": categoryService.delete(req, resp); break;
         }
     }
