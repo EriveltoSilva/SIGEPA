@@ -2,7 +2,7 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
         <li class="nav-item">
-            <a class="nav-link" href="./dashboard">
+            <a class="nav-link" href="<%= request.getContextPath() %>/dashboard">
                 <i class="typcn typcn-device-desktop menu-icon"></i>
                 <span class="menu-title">Dashboard</span>
             </a>
@@ -18,10 +18,10 @@
             <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> 
-                        <a class="nav-link" href="./user-register">Cadastrar Usuário</a>
+                        <a class="nav-link" href="<%= request.getContextPath() %>/user-register">Cadastrar Usuário</a>
                     </li>
                     <li class="nav-item"> 
-                        <a class="nav-link" href="./user-list">Listar Usuários</a>
+                        <a class="nav-link" href="<%= request.getContextPath() %>/user-list">Listar Usuários</a>
                     </li>
                 </ul>
             </div>
@@ -36,10 +36,10 @@
             <div class="collapse" id="form-category">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item">
-                        <a class="nav-link" href="./category-new">Novo Categoria</a>
+                        <a class="nav-link" href="<%= request.getContextPath() %>/category-register">Novo Categoria</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./category-list"> Listar Categorias</a>
+                        <a class="nav-link" href="<%= request.getContextPath() %>/category-list"> Listar Categorias</a>
                     </li>
                 </ul>
             </div>
@@ -56,10 +56,10 @@
             <div class="collapse" id="form-elements">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item">
-                        <a class="nav-link" href="./product-new">Novo Produto</a>
+                        <a class="nav-link" href="<%= request.getContextPath() %>/product-new">Novo Produto</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./product-list"> Listar Produtos</a>
+                        <a class="nav-link" href="<%= request.getContextPath() %>/product-list"> Listar Produtos</a>
                     </li>
                 </ul>
             </div>

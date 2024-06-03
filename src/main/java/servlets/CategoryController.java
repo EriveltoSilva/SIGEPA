@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-@WebServlet(urlPatterns = {"/category-delete"})
+@WebServlet(urlPatterns = {"/category-register", "/category-delete"})
 public class CategoryController extends HttpServlet {
 
     private final Connection connection = PostgresConnectionSingleton.getInstance().getConnection();
@@ -27,19 +27,23 @@ public class CategoryController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String command = req.getServletPath();
         switch (command){
-            case "/nothing": System.out.println("----> Nothing");break;
-            case "/nothing2": System.out.println("------> Nothing2");break;
+            case "/category-register":
+                System.out.println("GETTING CATEGORY NEW...");
+                req.getRequestDispatcher("/pages/category/category-register.jsp").forward(req, resp);break;
+
         }
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
         String command = req.getServletPath();
-
         switch (command){
+            case "/category-register": categoryService.save(req, resp); break;
             case "/category-delete": categoryService.delete(req, resp); break;
         }
     }
+
 
     @Override
     public void destroy() {

@@ -17,7 +17,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        System.out.println("GETTING...");
+        System.out.println("GETTING LOGIN...");
         req.getRequestDispatcher("/index.jsp").forward(req, resp);
     }
 
@@ -26,13 +26,14 @@ public class LoginServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html;charset=UTF-8");
 
-        System.out.println("POSTTING...");
+        System.out.println("POSTTING LOGIN...");
         String error = LoginValidator.validate(req.getParameter("email"), req.getParameter("password"));
         if(error != null) {
             req.setAttribute("errorMessage", error);
             this.doGet(req, resp);
         }
         // processar login
-        req.getRequestDispatcher("/pages/administrator/dashboard.jsp").forward(req, resp);
+        resp.sendRedirect(req.getContextPath()+"/pages/administrator/dashboard.jsp");
+        //req.getRequestDispatcher("/pages/administrator/dashboard.jsp").forward(req, resp);
     }
 }
