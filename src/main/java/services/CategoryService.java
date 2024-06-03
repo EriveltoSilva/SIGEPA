@@ -1,6 +1,7 @@
 package services;
 
 import dao.CategoryDAO;
+import interfaces.Service;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -11,8 +12,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
 
-public class CategoryService {
-
+public class CategoryService implements Service<CategoryModel> {
     private final CategoryDAO categoryDAO;
 
     public CategoryService(Connection connection) {
@@ -31,11 +31,10 @@ public class CategoryService {
         req.getRequestDispatcher("/pages/category/category-list.jsp").forward(req, resp);
     }
 
-
     public void getEdit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("GETTING CATEGORY EDIT...");
         try {
-            int id = Integer.parseInt(req.getParameter("id"));
+            long id = Long.parseLong(req.getParameter("id"));
             CategoryModel category = categoryDAO.findById(id);
             if(category==null)
                 req.setAttribute("errorMessage", "Erro: Categoria de edição não existe!");
@@ -54,9 +53,7 @@ public class CategoryService {
         resp.sendRedirect(req.getContextPath()+"/category-list");
     }
 
-
-    public void save(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-    {
+    public void save(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("POSTTING CATEGORY REGISTER...");
         String name = req.getParameter("name");
         String description = req.getParameter("description");
@@ -77,8 +74,6 @@ public class CategoryService {
 
     }
 
-
-
     public void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("POSTTING CATEGORY EDIT...");
         String id = req.getParameter("id");
@@ -92,7 +87,7 @@ public class CategoryService {
             req.getRequestDispatcher("/category-edit").forward(req, resp);
             return ;
         }
-        int idNumber = Integer.parseInt(id);
+        long idNumber = Long.parseLong(id);
         if(categoryDAO.update(new CategoryModel(idNumber, name.trim(), description.trim()))==0)
             req.setAttribute("errorMessage", "Algo deu errado, categoria não gravada! Tente mais tarde!");
         else
@@ -103,7 +98,7 @@ public class CategoryService {
     public void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("POSTTING CATEGORY DELETE...");
         try {
-            int id = Integer.parseInt(req.getParameter("id"));
+            long id = Integer.parseInt(req.getParameter("id"));
             if(categoryDAO.delete(id)==0)
                 req.setAttribute("errorMessage", "Erro deletando a categoria, tente mais tarde!");
             else

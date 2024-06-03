@@ -1,4 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.List" %>
+<%@ page import="models.ProductModel" %>
+<%
+    List<ProductModel> products = (List<ProductModel>) request.getAttribute("products");
+%>
     <!DOCTYPE html>
     <html lang="pt-AO">
 
@@ -56,14 +61,17 @@
                                                         </thead>
 
                                                         <tbody>
+                                                            <% if (products != null) {
+                                                                for (ProductModel product : products) {
+                                                            %>
                                                             <tr>
                                                                 <td class="py-1"><img
                                                                         src="assets/images/banner_12.jpg"
                                                                         alt="image" /></td>
-                                                                <td>Maça</td>
-                                                                <td>Frutas</td>
-                                                                <td>58</td>
-                                                                <td>01/06/2024</td>
+                                                                <td><%=product.getName() %></td>
+                                                                <td><%=product.getCategory().getName() %></td>
+                                                                <td><%=product.getQuantity() %></td>
+                                                                <td><%=product.getCreated_at() %></td>
                                                                 <td>
                                                                     <a title="Editar" href=""
                                                                         class="btn p-2 bg-primary text-light">
@@ -76,6 +84,8 @@
                                                                     </a>
                                                                 </td>
                                                             </tr>
+
+                                                            <% }} %>
 
                                                         </tbody>
                                                     </table>

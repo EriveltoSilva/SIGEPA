@@ -56,7 +56,7 @@
             <div class="collapse" id="form-elements">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item">
-                        <a class="nav-link" href="<%= request.getContextPath() %>/product-new">Novo Produto</a>
+                        <a class="nav-link" href="<%= request.getContextPath() %>/product-register">Novo Produto</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<%= request.getContextPath() %>/product-list"> Listar Produtos</a>

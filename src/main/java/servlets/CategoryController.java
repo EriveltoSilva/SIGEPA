@@ -1,19 +1,16 @@
 package servlets;
 
-import dao.CategoryDAO;
 import db.PostgresConnectionSingleton;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import models.CategoryModel;
 import services.CategoryService;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 
 @WebServlet(urlPatterns = {"/category-register", "/category-list", "/category-edit", "/category-delete"})
 public class CategoryController extends HttpServlet {
@@ -59,7 +56,5 @@ public class CategoryController extends HttpServlet {
             case "/category-delete": categoryService.delete(req, resp); break;
         }
     }
-
-
 
 }

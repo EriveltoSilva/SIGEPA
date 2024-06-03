@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryDAO implements DAO<CategoryModel, Integer> {
+public class CategoryDAO implements DAO<CategoryModel, Long> {
     private final Connection connection;
 
     public CategoryDAO(Connection connection)
@@ -42,7 +42,7 @@ public class CategoryDAO implements DAO<CategoryModel, Integer> {
         try(PreparedStatement st = connection.prepareStatement(cmd)) {
             st.setString(1, obj.getName());
             st.setString(2, obj.getDescription());
-            st.setInt(3, obj.getId());
+            st.setLong(3, obj.getId());
             rowAffecteds = st.executeUpdate();
         }
         catch (SQLException e) {
@@ -52,11 +52,11 @@ public class CategoryDAO implements DAO<CategoryModel, Integer> {
     }
 
     @Override
-    public int delete(Integer id) {
+    public int delete(Long id) {
         String cmd = "DELETE FROM category WHERE id=?;";
         int rowAffecteds=0;
         try(PreparedStatement st = connection.prepareStatement(cmd)) {
-            st.setInt(1, id);
+            st.setLong(1, id);
             rowAffecteds = st.executeUpdate();
         }
         catch (SQLException e) {
@@ -67,11 +67,11 @@ public class CategoryDAO implements DAO<CategoryModel, Integer> {
 
     @Override
     public CategoryModel convertToModel(ResultSet rs) throws SQLException {
-        return new CategoryModel(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getTimestamp("created_at"));
+        return new CategoryModel(rs.getLong("id"), rs.getString("name"), rs.getString("description"), rs.getTimestamp("created_at"));
     }
 
     @Override
-    public CategoryModel findById(Integer id) {
+    public CategoryModel findById(Long id) {
         CategoryModel category = null;
         String query = "SELECT * FROM category where id=?;";
         try(PreparedStatement st = createFindByIdStatement(connection, query, id); ResultSet rs = st.executeQuery()) {
@@ -98,9 +98,9 @@ public class CategoryDAO implements DAO<CategoryModel, Integer> {
         return list;
     }
 
-    private PreparedStatement  createFindByIdStatement(Connection connection, String query, Integer id) throws SQLException {
+    private PreparedStatement  createFindByIdStatement(Connection connection, String query, Long id) throws SQLException {
         PreparedStatement ps = connection.prepareStatement(query);
-        ps.setInt(1, id);
+        ps.setLong(1, id);
         return ps;
     }
 
