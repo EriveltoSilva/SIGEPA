@@ -32,7 +32,7 @@
                     <div class="main-panel">
                         <main class="content-wrapper">
                             <%@ include file="/partials/error-messages.jsp" %>
-                                <div class="row g-4 justify-content-center">
+                                <div class="row g-4 justify-content-left">
                                     <div class="col-sm-6 col-xl-3 mt-2">
                                         <div
                                             class="bg-primary border border-light text-light rounded d-flex align-items-center justify-content-between p-4">
@@ -66,11 +66,11 @@
                                         <div
                                             class="bg-primary border border-light text-light rounded d-flex align-items-center justify-content-between p-4">
                                             <img class="rounded-circle"
-                                                src="<%=request.getContextPath()%>/assets/images/taxa.png"
+                                                src="<%=request.getContextPath()%>/assets/images/user.png"
                                                 style="width: 80px; height: 80px;">
                                             <div class="ms-3">
                                                 <p class="mb-2">Total de Usuários</p>
-                                                <h6 class="mb-0">{{taxa_agendadas|floatformat:2}}%</h6>
+                                                <h6 class="mb-0">---</h6>
                                             </div>
                                         </div>
                                     </div>

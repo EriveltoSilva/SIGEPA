@@ -11,8 +11,7 @@ import services.ProductService;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.util.Date;
-import java.util.Map;
+import java.sql.SQLException;
 
 @WebServlet(name ="DashboardServlet", urlPatterns = {"/home","/dashboard", "/admin"})
 public class DashboardServlet extends HttpServlet {
@@ -26,6 +25,16 @@ public class DashboardServlet extends HttpServlet {
         this.categoryService = new CategoryService(this.connection);
     }
 
+    @Override
+    public void destroy() {
+        super.destroy();
+        try {
+            this.connection.close();
+        } catch (SQLException e) {
+            System.err.println("ERROR: Erro fechando a conexão de DashboardServlet");
+            throw new RuntimeException(e);
+        }
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -37,13 +46,5 @@ public class DashboardServlet extends HttpServlet {
         req.setAttribute("categoriesBar", categoryService.getCategoriesCountsByDate());
         getServletContext().getRequestDispatcher("/pages/administrator/dashboard.jsp").forward(req, resp);
     }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
-        resp.setContentType("text/html;charset=UTF-8");
-
-        System.out.println("POSTTING DASHBOARD...");
-        this.doGet(req, resp);
-    }
+    
 }
