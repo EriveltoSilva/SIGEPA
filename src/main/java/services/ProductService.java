@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class ProductService implements Service<ProductModel> {
     private final ProductDAO productDAO;
@@ -136,5 +137,9 @@ public class ProductService implements Service<ProductModel> {
         int totalProducts = productDAO.countProduct();
         System.out.println("NUM PRODUCTOS:"+totalProducts);
         return totalProducts;
+    }
+
+    public Map<Date, Integer> getProductCountsByDate(){
+        return productDAO.getProductCountsByDate();
     }
 }

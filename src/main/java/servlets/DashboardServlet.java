@@ -11,6 +11,8 @@ import services.ProductService;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.Date;
+import java.util.Map;
 
 @WebServlet(name ="DashboardServlet", urlPatterns = {"/home","/dashboard", "/admin"})
 public class DashboardServlet extends HttpServlet {
@@ -29,8 +31,10 @@ public class DashboardServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
         System.out.println("GETTING DASHBOARD...");
-        req.setAttribute("totalProducts", productService.countProducts());
         req.setAttribute("totalCategories", categoryService.countCategories());
+        req.setAttribute("totalProducts", productService.countProducts());
+        req.setAttribute("productsBar", productService.getProductCountsByDate());
+        req.setAttribute("categoriesBar", categoryService.getCategoriesCountsByDate());
         getServletContext().getRequestDispatcher("/pages/administrator/dashboard.jsp").forward(req, resp);
     }
 

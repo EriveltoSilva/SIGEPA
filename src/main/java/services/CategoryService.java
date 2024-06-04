@@ -10,7 +10,9 @@ import validators.CategoryValidator;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class CategoryService implements Service<CategoryModel> {
     private final CategoryDAO categoryDAO;
@@ -118,6 +120,10 @@ public class CategoryService implements Service<CategoryModel> {
 
     public int countCategories(){
         return categoryDAO.countCategories();
+    }
+
+    public Map<Date, Integer> getCategoriesCountsByDate(){
+        return categoryDAO.getCategoriesCountsByDate();
     }
 
 }

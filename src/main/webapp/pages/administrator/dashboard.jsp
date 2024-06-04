@@ -1,199 +1,290 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% int totalProducts = (int) request.getAttribute("totalProducts"); %>
-<% int totalCategories = (int) request.getAttribute("totalCategories"); %>
-    <!DOCTYPE html>
-    <html lang="pt-AO">
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.Date" %>
 
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>SIGEPA - Dashboard</title>
+<% int totalProducts=(int) request.getAttribute("totalProducts"); %>
+<% int totalCategories=(int) request.getAttribute("totalCategories"); %>
+<!DOCTYPE html>
+<html lang="pt-AO">
 
-        <%@ include file="/partials/head-imports.jsp" %>
-    </head>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>SIGEPA - Dashboard</title>
 
-
-    <body>
-        <div class="row d-none" id="proBanner">
-            <i class="typcn typcn-delete-outline" id="bannerClose"></i>
-        </div>
+    <%@ include file="/partials/head-imports.jsp" %>
+</head>
 
 
-        <div class="container-scroller">
-            <%@ include file="/partials/topbar.jsp" %>
+<body>
+    <div class="row d-none" id="proBanner">
+        <i class="typcn typcn-delete-outline" id="bannerClose"></i>
+    </div>
 
 
-                <div class="container-fluid page-body-wrapper">
-                    <%@ include file="/partials/sidebar.jsp" %>
+    <div class="container-scroller">
+        <%@ include file="/partials/topbar.jsp" %>
 
-                        <div class="main-panel">
-                            <main class="content-wrapper">
-                                <%@ include file="/partials/error-messages.jsp" %>
-                                    <div class="row g-4 justify-content-center">
-                                        <div class="col-sm-6 col-xl-3 mt-2">
-                                            <div
-                                                class="bg-primary border border-light text-light rounded d-flex align-items-center justify-content-between p-4">
-                                                <img class="rounded-circle"
-                                                    src="<%=request.getContextPath()%>/assets/images/agricultural.jpg"
-                                                    style="width: 80px; height: 80px;">
-                                                <div class="ms-3">
-                                                    <p class="mb-2">Total de Productos</p>
-                                                    <h6 class="mb-0"> <%=totalProducts %> </h6>
-                                                </div>
+
+            <div class="container-fluid page-body-wrapper">
+                <%@ include file="/partials/sidebar.jsp" %>
+
+                    <div class="main-panel">
+                        <main class="content-wrapper">
+                            <%@ include file="/partials/error-messages.jsp" %>
+                                <div class="row g-4 justify-content-center">
+                                    <div class="col-sm-6 col-xl-3 mt-2">
+                                        <div
+                                            class="bg-primary border border-light text-light rounded d-flex align-items-center justify-content-between p-4">
+                                            <img class="rounded-circle"
+                                                src="<%=request.getContextPath()%>/assets/images/agricultural.jpg"
+                                                style="width: 80px; height: 80px;">
+                                            <div class="ms-3">
+                                                <p class="mb-2">Total de Productos</p>
+                                                <h6 class="mb-0">
+                                                    <%=totalProducts %>
+                                                </h6>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6 col-xl-3 mt-2">
-                                            <div
-                                                class="bg-light border border-primary text-primary rounded d-flex align-items-center justify-content-between p-4">
-                                                <img class="rounded-circle"
-                                                    src="<%=request.getContextPath()%>/assets/images/category.jpg"
-                                                    style="width: 80px; height: 80px;">
-                                                <div class="ms-3">
-                                                    <p class="mb-2">Total de Categorias</p>
-                                                    <h6 class="mb-0">  <%=totalCategories %>  </h6>
-                                                </div>
+                                    </div>
+                                    <div class="col-sm-6 col-xl-3 mt-2">
+                                        <div
+                                            class="bg-light border border-primary text-primary rounded d-flex align-items-center justify-content-between p-4">
+                                            <img class="rounded-circle"
+                                                src="<%=request.getContextPath()%>/assets/images/category.jpg"
+                                                style="width: 80px; height: 80px;">
+                                            <div class="ms-3">
+                                                <p class="mb-2">Total de Categorias</p>
+                                                <h6 class="mb-0">
+                                                    <%=totalCategories %>
+                                                </h6>
                                             </div>
                                         </div>
-
-                                        <div class="col-sm-6 col-xl-3 mt-2">
-                                            <div
-                                                class="bg-primary border border-light text-light rounded d-flex align-items-center justify-content-between p-4">
-                                                <img class="rounded-circle" src="<%=request.getContextPath()%>/assets/images/taxa.png"
-                                                    style="width: 80px; height: 80px;">
-                                                <div class="ms-3">
-                                                    <p class="mb-2">Total de Usuários</p>
-                                                    <h6 class="mb-0">{{taxa_agendadas|floatformat:2}}%</h6>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col-xl-6 grid-margin stretch-card flex-column">
-                                            <h5 class="mb-2 text-titlecase mb-4"> Estatisticas Interessantes</h5>
-                                            <div class="row h-100">
-                                                <div class="col-md-12 stretch-card">
-                                                    <div class="card">
-                                                        <div class="card-body">
-                                                            <div
-                                                                class="d-flex justify-content-between align-items-start flex-wrap">
-                                                                <div>
-                                                                    <p class="mb-3">Aumento Mensal de Produtos</p>
-                                                                    <h3>67842</h3>
-                                                                </div>
-                                                                <div id="income-chart-legend"
-                                                                    class="d-flex flex-wrap mt-1 mt-md-0">
-                                                                </div>
-                                                            </div>
-                                                            <canvas id="income-chart"></canvas>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                    <div class="col-sm-6 col-xl-3 mt-2">
+                                        <div
+                                            class="bg-primary border border-light text-light rounded d-flex align-items-center justify-content-between p-4">
+                                            <img class="rounded-circle"
+                                                src="<%=request.getContextPath()%>/assets/images/taxa.png"
+                                                style="width: 80px; height: 80px;">
+                                            <div class="ms-3">
+                                                <p class="mb-2">Total de Usuários</p>
+                                                <h6 class="mb-0">{{taxa_agendadas|floatformat:2}}%</h6>
                                             </div>
                                         </div>
                                     </div>
 
 
+                                </div>
 
-                                    <div class="row">
-                                        <div class="col-md-4 grid-margin stretch-card">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <div
-                                                        class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
-                                                        <div>
-                                                            <p class="mb-2 text-md-center text-lg-left">Aumento de
-                                                                Usuários
-                                                            </p>
-                                                            <h1 class="mb-0">8742</h1>
-                                                        </div>
-                                                        <i class="typcn typcn-briefcase icon-xl text-secondary"></i>
-                                                    </div>
-                                                    <canvas id="expense-chart" height="80"></canvas>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4 grid-margin stretch-card">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <div
-                                                        class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
-                                                        <div>
-                                                            <p class="mb-2 text-md-center text-lg-left">Total Budget</p>
-                                                            <h1 class="mb-0">47,840</h1>
-                                                        </div>
-                                                        <i class="typcn typcn-chart-pie icon-xl text-secondary"></i>
-                                                    </div>
-                                                    <canvas id="budget-chart" height="80"></canvas>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="card">
-                                                <div class="table-responsive pt-3">
-                                                    <table class="table table-striped project-orders-table">
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="ml-5">ID</th>
-                                                                <th>Project name</th>
-                                                                <th>Customer</th>
-                                                                <th>Deadline</th>
-                                                                <th>Payouts </th>
-                                                                <th>Traffic</th>
-                                                                <th>Actions</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>#D1</td>
-                                                                <td>Consectetur adipisicing elit </td>
-                                                                <td>Beulah Cummings</td>
-                                                                <td>03 Jan 2019</td>
-                                                                <td>$ 5235</td>
-                                                                <td>1.3K</td>
-                                                                <td>
-                                                                    <div class="d-flex align-items-center">
-                                                                        <button type="button"
-                                                                            class="btn btn-success btn-sm btn-icon-text mr-3">
-                                                                            Edit
-                                                                            <i
-                                                                                class="typcn typcn-edit btn-icon-append"></i>
-                                                                        </button>
-                                                                        <button type="button"
-                                                                            class="btn btn-danger btn-sm btn-icon-text">
-                                                                            Delete
-                                                                            <i
-                                                                                class="typcn typcn-delete-outline btn-icon-append"></i>
-                                                                        </button>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+                                
+                                
+                                
+                                
+                                <h2 class="text-titlecase mt-4 h5"> Quand. de Productos/Dia</h2>
+                                <div class="row">
+                                    <div class="col-lg-6 grid-margin stretch-card">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h3 class="card-title h4">Gráfico de Barras</h3>
+                                                <canvas id="productBarChart"></canvas>
                                             </div>
                                         </div>
                                     </div>
-                            </main>
+                                    <div class="col-lg-6 grid-margin stretch-card">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h4 class="card-title">Gráfico de Linha</h4>
+                                                <canvas id="productLineChart"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-                            <%@ include file="/partials/footer.jsp" %>
-                                </main>
-                        </div>
+                                <h2 class="text-titlecase mt-4 h5"> Quand. de Categorias Criadas/Dia</h2>
+                                <div class="row">
+                                    <div class="col-lg-6 grid-margin stretch-card">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h3 class="card-title h4">Gráfico de Barras</h3>
+                                                <canvas id="categoryBarChart"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 grid-margin stretch-card">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h4 class="card-title">Gráfico de Linha</h4>
+                                                <canvas id="categoryLineChart"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-                </div>
+
+                        </main>
+
+                        <%@ include file="/partials/footer.jsp" %>
+                    </div>
+
+            </div>
 
 
 
-                <%@ include file="/partials/js-imports.jsp" %>
-    </body>
+            <%@ include file="/partials/js-imports.jsp" %>
 
-    </html>
+    <script>
+        window.addEventListener("load", () => {
+            let labelsProductBar = [];
+            let dataProductBar = [];
+            
+            let labelsCategoryBar = [];
+            let dataCategoryBar = [];
+
+            <%
+                Map<Date, Integer> productsBar = (Map<Date, Integer>) request.getAttribute("productsBar");
+                if (productsBar != null) {
+                    for (Map.Entry<Date, Integer> entry : productsBar.entrySet()) {
+                        String date = entry.getKey().toString();
+                        int count = entry.getValue();
+            %>
+                        labelsProductBar.push("<%= date %>");
+                        dataProductBar.push(<%= count %>);
+            <%
+                    }
+                }
+            %>
+
+            <%
+                Map<Date, Integer> categoriesBar = (Map<Date, Integer>) request.getAttribute("categoriesBar");
+                if (categoriesBar != null) {
+                    for (Map.Entry<Date, Integer> entry : categoriesBar.entrySet()) {
+                        String date = entry.getKey().toString();
+                        int count = entry.getValue();
+            %>
+                        labelsCategoryBar.push("<%= date %>");
+                        dataCategoryBar.push(<%= count %>);
+            <%
+                    }
+                }
+            %>
+
+            var options = {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+                legend: {
+                    display: false
+                },
+                elements: {
+                    point: {
+                        radius: 0
+                    }
+                }
+            };
+
+
+            var dataTotalProducts = {
+                labels: labelsProductBar,
+                datasets: [{
+                    label: '# of Votes',
+                    data: dataProductBar,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1,
+                    fill: false
+                }]
+            };
+            
+            var dataTotalCategory = {
+                labels: labelsCategoryBar,
+                datasets: [{
+                    label: '# of Votes',
+                    data: dataCategoryBar,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1,
+                    fill: false
+                }]
+            };
+
+            // Get context with jQuery - using jQuery's .get() method.
+            if ($("#productBarChart").length) {
+                var barChartCanvas = $("#productBarChart").get(0).getContext("2d");
+                // This will get the first returned node in the jQuery collection.
+                var barChart = new Chart(barChartCanvas, {
+                    type: 'bar',
+                    data: dataTotalProducts,
+                    options: options
+                });
+            }
+
+            if ($("#productLineChart").length) {
+                var lineChartCanvas = $("#productLineChart").get(0).getContext("2d");
+                var lineChart = new Chart(lineChartCanvas, {
+                    type: 'line',
+                    data: dataTotalProducts,
+                    options: options
+                });
+            }
+
+
+            //----------------------------------------------------------------------------------------------------------------------
+            if ($("#categoryBarChart").length) {
+                var barChartCanvas = $("#categoryBarChart").get(0).getContext("2d");
+                var barChart = new Chart(barChartCanvas, {
+                    type: 'bar',
+                    data: dataTotalCategory,
+                    options: options
+                });
+            }
+
+            if ($("#categoryLineChart").length) {
+                var lineChartCanvas = $("#categoryLineChart").get(0).getContext("2d");
+                var lineChart = new Chart(lineChartCanvas, {
+                    type: 'line',
+                    data: dataTotalCategory,
+                    options: options
+                });
+            }
+            
+        });
+
+
+    </script>
+</body>
+
+</html>

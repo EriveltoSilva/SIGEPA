@@ -7,8 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class CategoryDAO implements DAO<CategoryModel, Long> {
     private final Connection connection;
@@ -19,6 +18,24 @@ public class CategoryDAO implements DAO<CategoryModel, Long> {
             throw new NullPointerException("A conexão com o banco não pode ser null!");
         this.connection = connection;
     }
+
+    public Map<Date, Integer> getCategoriesCountsByDate(){
+        String query = "SELECT created_at::date AS date, COUNT(*) AS count FROM category GROUP BY created_at::date ORDER BY created_at::date;";
+        Map<Date, Integer> productCounts = new LinkedHashMap<>();
+
+        try(PreparedStatement st = connection.prepareStatement(query); ResultSet rs = st.executeQuery()) {
+            while (rs.next()) {
+                Date date = rs.getDate("date");
+                int count = rs.getInt("count");
+                productCounts.put(date, count);
+            }
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return productCounts;
+    }
+
 
     public int countCategories(){
         int result=0;
