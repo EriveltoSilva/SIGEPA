@@ -20,6 +20,21 @@ public class CategoryDAO implements DAO<CategoryModel, Long> {
         this.connection = connection;
     }
 
+    public int countCategories(){
+        int result=0;
+        String query = "SELECT COUNT(*) FROM category;";
+
+        try(PreparedStatement st = connection.prepareStatement(query); ResultSet rs = st.executeQuery()) {
+            rs.next();
+            result = rs.getInt("count");
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
+
+
     @Override
     public int save(CategoryModel obj) {
         String cmd = "INSERT INTO category(name, description, created_at) VALUES (?, ?, CURRENT_TIMESTAMP);";

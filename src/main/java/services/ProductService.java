@@ -24,6 +24,7 @@ public class ProductService implements Service<ProductModel> {
         this.categoryDAO = new CategoryDAO(connection);
     }
 
+
     public void getRegister(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("GETTING PRODUCT REGISTER...");
         List<CategoryModel> list = categoryDAO.findAll();
@@ -131,4 +132,9 @@ public class ProductService implements Service<ProductModel> {
         resp.sendRedirect(req.getContextPath() + "/product-list");
     }
 
+    public int countProducts(){
+        int totalProducts = productDAO.countProduct();
+        System.out.println("NUM PRODUCTOS:"+totalProducts);
+        return totalProducts;
+    }
 }

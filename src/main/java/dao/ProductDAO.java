@@ -22,6 +22,20 @@ public class ProductDAO implements DAO<ProductModel, Long> {
         this.connection = connection;
     }
 
+    public int countProduct(){
+        int result=0;
+        String query = "SELECT COUNT(*) FROM product;";
+
+        try(PreparedStatement st = connection.prepareStatement(query); ResultSet rs = st.executeQuery()) {
+            rs.next();
+            result = rs.getInt("count");
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
+
     @Override
     public int save(ProductModel obj) {
         String cmd = "INSERT INTO product(name, description, price, quantity, category_id, created_at) VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP);";

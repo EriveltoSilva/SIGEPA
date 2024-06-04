@@ -116,4 +116,8 @@ public class CategoryService implements Service<CategoryModel> {
         resp.sendRedirect(req.getContextPath() + "/category-list");
     }
 
+    public int countCategories(){
+        return categoryDAO.countCategories();
+    }
+
 }
