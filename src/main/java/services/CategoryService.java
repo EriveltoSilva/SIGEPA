@@ -84,9 +84,13 @@ public class CategoryService implements Service<CategoryModel> {
 
         if(errorMessage!=null){
             req.setAttribute("errorMessage", errorMessage);
-            req.getRequestDispatcher("/category-edit").forward(req, resp);
+            if(id!=null)
+                resp.sendRedirect(req.getContextPath()+"/category-edit?id="+id);
+            else
+                resp.sendRedirect(req.getContextPath()+"/category-list");
             return ;
         }
+
         long idNumber = Long.parseLong(id);
         if(categoryDAO.update(new CategoryModel(idNumber, name.trim(), description.trim()))==0)
             req.setAttribute("errorMessage", "Algo deu errado, categoria não gravada! Tente mais tarde!");

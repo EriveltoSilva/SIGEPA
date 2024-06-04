@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="models.CategoryModel" %>
-
+<%
+  CategoryModel category = (CategoryModel) request.getAttribute("category");
+%>
     <!DOCTYPE html>
     <html lang="pt-AO">
 
@@ -34,10 +36,7 @@
 
                                     <div
                                         class="col-10 col-sm-10 col-md-6 d-lg-6 d-xl-6 mx-auto col-md-6 grid-margin stretch-card">
-                                        <%
-                                          CategoryModel category = (CategoryModel) request.getAttribute("category");
 
-                                        %>
                                         <div class="card">
                                             <div class="card-body">
                                                 <h4 class="card-title">Categoria de Produto - <span

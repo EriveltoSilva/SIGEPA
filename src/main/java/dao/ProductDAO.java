@@ -3,7 +3,6 @@ package dao;
 import interfaces.DAO;
 import models.CategoryModel;
 import models.ProductModel;
-import models.ProductModel;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

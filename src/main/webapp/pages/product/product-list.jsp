@@ -54,7 +54,8 @@
                                                                 <th>Imagem</th>
                                                                 <th>Nome</th>
                                                                 <th>Categoria</th>
-                                                                <th>Quantidade</th>
+                                                                <th>Quantid.(unidades)</th>
+                                                                <th>Preço(Kz)</th>
                                                                 <th>Criado a</th>
                                                                 <th>Ações</th>
                                                             </tr>
@@ -71,17 +72,46 @@
                                                                 <td><%=product.getName() %></td>
                                                                 <td><%=product.getCategory().getName() %></td>
                                                                 <td><%=product.getQuantity() %></td>
+                                                                <td><%=product.getPrice()%></td>
                                                                 <td><%=product.getCreated_at() %></td>
                                                                 <td>
-                                                                    <a title="Editar" href=""
-                                                                        class="btn p-2 bg-primary text-light">
-                                                                        <i class="bi bi-pencil-square"></i>
-                                                                    </a>
+                                                                    <div class="d-flex">
+                                                                        <form method="get" action="./product-edit">
+                                                                            <input type="hidden" name="id" value="<%= product.getId() %>" />
+                                                                            <button title="Editar"  class="btn p-2 bg-primary text-light">
+                                                                                <i class="bi bi-pencil-square"></i>
+                                                                            </button>
+                                                                        </form>
 
-                                                                    <a title="Eliminar" href=""
-                                                                        class="btn p-2 bg-danger text-light">
-                                                                        <i class="bi bi-trash-fill"></i>
-                                                                    </a>
+                                                                        <button type="button" title="Deletar Produto" class="mx-2 btn p-2 bg-danger text-light" data-toggle="modal" data-target="#modalDelete<%= product.getId() %>">
+                                                                          <i class="bi bi-trash-fill"></i>
+                                                                        </button>
+                                                                    </div>
+
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="modalDelete<%= product.getId() %>" tabindex="-1" aria-labelledby="modalDelete<%= product.getId() %>Label" aria-hidden="true">
+                                                                      <div class="modal-dialog">
+                                                                        <div class="modal-content">
+                                                                          <div class="modal-header">
+                                                                            <h5 class="modal-title" id="exampleModalLabel">Deletar</h5>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                              <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                          </div>
+                                                                          <div class="modal-body">
+                                                                            Tem a certeza que deseja deletar a categoria <%= product.getName() %>
+                                                                          </div>
+                                                                          <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                                            <form method="post" action="./product-delete">
+                                                                                <input type="hidden" name="id" value="<%= product.getId() %>" />
+                                                                                <button type="submit" class="btn btn-primary">Deletar</button>
+                                                                            </form>
+                                                                          </div>
+                                                                        </div>
+                                                                      </div>
+                                                                    </div>
+                                                                    <!-- EndModal -->
                                                                 </td>
                                                             </tr>
 

@@ -1,4 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="models.CategoryModel" %>
+<%@ page import="models.ProductModel" %>
+<%@ page import="java.util.List" %>
+
+<%
+  ProductModel product = (ProductModel) request.getAttribute("product");
+  List<CategoryModel> categories = (List<CategoryModel>) request.getAttribute("categories");
+%>
     <!DOCTYPE html>
     <html lang="pt-AO">
 
@@ -34,37 +42,50 @@
                                         class="col-10 col-sm-10 col-md-6 d-lg-6 d-xl-6 mx-auto col-md-6 grid-margin stretch-card">
                                         <div class="card">
                                             <div class="card-body">
-                                                <h4 class="card-title">Novo Producto</h4>
+                                                <h4 class="card-title">Edição do Produto <%=product.getName() %></h4>
                                                 <p class="card-description">
-                                                    Um <span class="badge-danger p-2 rounded">novo</span> produto?
-                                                    Fantástico, a produção está a aumentar.
+                                                    Um detalhe por  <span class="badge-danger p-2 rounded">alterar</span> no produto?
+                                                    Ok, faça-o com cuidado.
                                                 </p>
 
-                                                <form class="forms-sample" method="post" action="">
+                                                <form class="forms-sample" method="post" action="./product-edit">
+                                                    <input type="hidden" name="id" value="<%=product.getId() %>">
+                                                    
                                                     <div class="form-group">
                                                         <label for="exampleInputUsername1">Nome</label>
-                                                        <input type="text" name="name" class="form-control"
+                                                        <input type="text" name="name" value="<%=product.getName() %>" class="form-control"
                                                             id="exampleInputNome1" placeholder="Nome do Produto">
                                                     </div>
 
-                                                    <div class="form-group">
+                                                    <div class="form-group text-left">
                                                         <label for="exampleInputDescription1">Descrição</label>
-                                                        <Textarea name="description" class="form-control" cols="6"
-                                                            placeholder="Descrição do producto"></Textarea>
+                                                        <Textarea name="description" class="form-control" placeholder="Descrição do producto">
+                                                             <%=product.getDescription() %>
+                                                        </Textarea>
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label for="exampleInputCategory1">Categoria do Produto</label>
-                                                        <select name="category" class="form-control">
-                                                            <option value="1">Fruta</option>
-                                                            <option value="2">Hortaliças</option>
+                                                        <select name="categoryId" class="form-control">
+                                                        <% for (CategoryModel category : categories) { %>
+                                                            <option value="<%=category.getId() %>"
+                                                                <% if(category.getId() == product.getCategory().getId()) { %>
+                                                                selected
+                                                                <% } %>
+                                                            ><%=category.getName() %></option>
+                                                        <% } %>
                                                         </select>
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label for="exampleInputQuantity">Quantidade</label>
                                                         <input type="number" name="quantity" class="form-control" min=1
-                                                            id="exampleInputQuantity" placeholder="Quantidade">
+                                                            id="exampleInputQuantity"  value="<%=product.getQuantity() %>" placeholder="Quantidade">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleInputPrice">Preço</label>
+                                                        <input type="number" name="price" class="form-control" min=1
+                                                            id="exampleInputPrice"  value="<%=product.getPrice() %>" placeholder="Preço">
                                                     </div>
 
                                                     <button type="submit" class="btn btn-primary mr-2">

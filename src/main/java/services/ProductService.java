@@ -27,7 +27,6 @@ public class ProductService implements Service<ProductModel> {
     public void getRegister(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("GETTING PRODUCT REGISTER...");
         List<CategoryModel> list = categoryDAO.findAll();
-        System.out.println(list);
         req.setAttribute("categories", list);
         req.getRequestDispatcher("/pages/product/product-register.jsp").forward(req, resp);
     }
@@ -44,9 +43,13 @@ public class ProductService implements Service<ProductModel> {
         try {
             long id = Long.parseLong(req.getParameter("id"));
             ProductModel product = productDAO.findById(id);
-            if(product==null)
-                req.setAttribute("errorMessage", "Erro: Producto de edição não existe!");
+            List<CategoryModel> categories = categoryDAO.findAll();
 
+            if(product==null) {
+                req.setAttribute("errorMessage", "Erro: Este Producto não existe!");
+            }
+
+            req.setAttribute("categories", categories);
             req.setAttribute("product", product);
             req.getRequestDispatcher("/pages/product/product-edit.jsp").forward(req,resp);
         }
@@ -96,7 +99,11 @@ public class ProductService implements Service<ProductModel> {
 
         if(errorMessage!=null){
             req.setAttribute("errorMessage", errorMessage);
-            req.getRequestDispatcher("/product-edit").forward(req, resp);
+            System.err.println(errorMessage);
+            if(id!=null)
+                resp.sendRedirect(req.getContextPath()+"/product-edit?id="+id);
+            else
+                resp.sendRedirect(req.getContextPath()+"/product-list");
             return ;
         }
         long idNumber = Long.parseLong(id);

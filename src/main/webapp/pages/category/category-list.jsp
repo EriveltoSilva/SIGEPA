@@ -1,7 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <%@ page import="java.util.List" %>
 <%@ page import="models.CategoryModel" %>
-
+<%
+    List<CategoryModel> categories = (List<CategoryModel>) request.getAttribute("categories");
+%>
     <!DOCTYPE html>
     <html lang="pt-AO">
 
@@ -61,7 +64,6 @@
                                                         <tbody>
 
                                                         <%
-                                                            List<CategoryModel> categories = (List<CategoryModel>) request.getAttribute("categories");
                                                             if (categories != null) {
                                                                 for (CategoryModel category : categories) {
                                                         %>
