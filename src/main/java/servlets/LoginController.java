@@ -58,6 +58,11 @@ public class LoginController extends HttpServlet {
         }
         req.getSession().setAttribute("user", user);
         req.setAttribute("successMessage", "SEJA BEM VINDO");
+        String previousURL = req.getParameter("previousURL");
+        if(previousURL!=null && !previousURL.isEmpty()) {
+            resp.sendRedirect(req.getContextPath()+previousURL);
+            return;
+        }
         req.getRequestDispatcher("/dashboard").forward(req, resp);
     }
 }

@@ -42,12 +42,12 @@
                     </div>
                     <!--/ End Divider -->
 
-                    <form method="post" action="./login">
+                    <form method="post" action="<%=request.getContextPath()%>/login">
                         <div class="form-group">
                         <%@ include file="partials/error-messages.jsp" %>
                         </div>
 
-                        <input type="hidden" name="previousURL"  />
+                        <input type="hidden" name="previousURL" value="<%=(String)request.getAttribute("previousURL") %>" />
 
                         <div class="input-group mb-3">
                             <span class="input-group-text">
