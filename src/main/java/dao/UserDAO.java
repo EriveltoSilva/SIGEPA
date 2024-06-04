@@ -1,7 +1,8 @@
 package dao;
 
 import interfaces.DAO;
-import models.CategoryModel;
+import models.UserModel;
+import models.UserModel;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,18 +10,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-public class CategoryDAO implements DAO<CategoryModel, Long> {
+public class UserDAO implements DAO<UserModel, Long> {
     private final Connection connection;
 
-    public CategoryDAO(Connection connection)
+    public UserDAO(Connection connection)
     {
         if(connection == null)
             throw new NullPointerException("A conexão com o banco não pode ser null!");
         this.connection = connection;
     }
 
-    public Map<Date, Integer> getCategoriesCountsByDate(){
-        String query = "SELECT created_at::date AS date, COUNT(*) AS count FROM categories GROUP BY created_at::date ORDER BY created_at::date;";
+    public Map<Date, Integer> getUsersCountsByDate(){
+        String query = "SELECT created_at::date AS date, COUNT(*) AS count FROM users GROUP BY created_at::date ORDER BY created_at::date;";
         Map<Date, Integer> productCounts = new LinkedHashMap<>();
 
         try(PreparedStatement st = connection.prepareStatement(query); ResultSet rs = st.executeQuery()) {
@@ -37,9 +38,9 @@ public class CategoryDAO implements DAO<CategoryModel, Long> {
     }
 
 
-    public int countCategories(){
+    public int countUsers(){
         int result=0;
-        String query = "SELECT COUNT(*) FROM categories;";
+        String query = "SELECT COUNT(*) FROM users;";
 
         try(PreparedStatement st = connection.prepareStatement(query); ResultSet rs = st.executeQuery()) {
             rs.next();
@@ -51,14 +52,16 @@ public class CategoryDAO implements DAO<CategoryModel, Long> {
         return result;
     }
 
-
     @Override
-    public int save(CategoryModel obj) {
-        String cmd = "INSERT INTO categories(name, description, created_at) VALUES (?, ?, CURRENT_TIMESTAMP);";
+    public int save(UserModel obj) {
+        String cmd = "INSERT INTO users( full_name, email, username, password, created_at)\n" +
+                "    VALUES (?, ?, ?,md5(?), CURRENT_TIMESTAMP);";
         int rowAffecteds=0;
         try(PreparedStatement st = connection.prepareStatement(cmd)) {
-            st.setString(1, obj.getName());
-            st.setString(2, obj.getDescription());
+            st.setString(1, obj.getFullName());
+            st.setString(2, obj.getEmail());
+            st.setString(3, obj.getUsername());
+            st.setString(4, obj.getPassword());
             rowAffecteds = st.executeUpdate();
         }
         catch (SQLException e) {
@@ -68,13 +71,15 @@ public class CategoryDAO implements DAO<CategoryModel, Long> {
     }
 
     @Override
-    public int update(CategoryModel obj) {
-        String cmd = "UPDATE categories SET name=?, description=? WHERE id=?;";
+    public int update(UserModel obj) {
+        String cmd = "UPDATE users SET full_name =?, email=?, username=? , password=md5(?) WHERE id=?;";
         int rowAffecteds=0;
         try(PreparedStatement st = connection.prepareStatement(cmd)) {
-            st.setString(1, obj.getName());
-            st.setString(2, obj.getDescription());
-            st.setLong(3, obj.getId());
+            st.setString(1, obj.getFullName());
+            st.setString(2, obj.getEmail());
+            st.setString(3, obj.getUsername());
+            st.setString(4, obj.getPassword());
+            st.setLong(5, obj.getId());
             rowAffecteds = st.executeUpdate();
         }
         catch (SQLException e) {
@@ -85,7 +90,7 @@ public class CategoryDAO implements DAO<CategoryModel, Long> {
 
     @Override
     public int delete(Long id) {
-        String cmd = "DELETE FROM categories WHERE id=?;";
+        String cmd = "DELETE FROM users WHERE id=?;";
         int rowAffecteds=0;
         try(PreparedStatement st = connection.prepareStatement(cmd)) {
             st.setLong(1, id);
@@ -98,28 +103,29 @@ public class CategoryDAO implements DAO<CategoryModel, Long> {
     }
 
     @Override
-    public CategoryModel convertToModel(ResultSet rs) throws SQLException {
-        return new CategoryModel(rs.getLong("id"), rs.getString("name"), rs.getString("description"), rs.getTimestamp("created_at"));
+    public UserModel convertToModel(ResultSet rs) throws SQLException {
+        return new UserModel(rs.getLong("id"), rs.getString("full_name"),
+                rs.getString("email"),rs.getString("username"),rs.getString("password"), rs.getTimestamp("created_at"));
     }
 
     @Override
-    public CategoryModel findById(Long id) {
-        CategoryModel category = null;
-        String query = "SELECT * FROM categories where id=?;";
+    public UserModel findById(Long id) {
+        UserModel user = null;
+        String query = "SELECT * FROM users where id=?;";
         try(PreparedStatement st = createFindByIdStatement(connection, query, id); ResultSet rs = st.executeQuery()) {
             if (rs.next())
-                category = convertToModel(rs);
+                user = convertToModel(rs);
         }
         catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return category;
+        return user;
     }
 
     @Override
-    public List<CategoryModel> findAll() {
-        List<CategoryModel> list = new ArrayList<>();
-        String query = "SELECT * FROM categories;";
+    public List<UserModel> findAll() {
+        List<UserModel> list = new ArrayList<>();
+        String query = "SELECT * FROM users;";
         try(PreparedStatement st = connection.prepareStatement(query); ResultSet rs = st.executeQuery()) {
             while (rs.next())
                 list.add(convertToModel(rs));
@@ -135,5 +141,4 @@ public class CategoryDAO implements DAO<CategoryModel, Long> {
         ps.setLong(1, id);
         return ps;
     }
-
 }

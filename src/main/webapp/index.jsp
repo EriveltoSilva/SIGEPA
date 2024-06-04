@@ -9,28 +9,28 @@
     <meta name="keywords" content="Login, SIGEPA, Busca, emprego">
     <meta name="description" content="Página de Login da SIGEPA">
     <title>SIGEPA- Login </title>
-    <link rel="shortcut icon" href="assets/images/logo.png" />
-    <link href="assets/vendors/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/vendors/bootstrap5/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/login.css">
+    <link rel="shortcut icon" href="<%= request.getContextPath() %>/assets/images/logo.png" />
+    <link href="<%= request.getContextPath() %>/assets/vendors/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="<%= request.getContextPath() %>/assets/vendors/bootstrap5/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/login.css">
 
 </head>
 
 <body>
     <div class="row vh-100 g-0">
         <div class="col-lg-6 position-relative d-none d-lg-block">
-            <img src="assets/images/bg.jpg" alt="Imagem de Fundo do Login na SIGEPA" class="bg-holder">
+            <img src="<%= request.getContextPath() %>/assets/images/bg.jpg" alt="Imagem de Fundo do Login na SIGEPA" class="bg-holder">
         </div>
 
         <div class="col-lg-6">
             <div class="row align-items-center justify-content-center h-100 g-0 px-4 px-sm-0">
                 <div class="col col-sm-6 col-lg-7 col-xl-6">
                     <a href="#" class="d-flex justify-content-center mb-4">
-                        <img src="assets/images/logo.png" alt="Logotipo da SIGEPA" width="220">
+                        <img src="<%= request.getContextPath() %>/assets/images/logo.png" alt="Logotipo da SIGEPA" width="220">
                     </a>
 
                     <div class="text-center mb-5">
-                        <h3 class="fw-bold">Faça o seu Login</h3>
+                        <h1 class="fw-bold h3">Faça o seu Login</h3>
                         <p class="text-secondary">Acesse a sua conta</p>
                     </div>
 
@@ -47,11 +47,13 @@
                         <%@ include file="partials/error-messages.jsp" %>
                         </div>
 
+                        <input type="hidden" name="previousURL"  />
+
                         <div class="input-group mb-3">
                             <span class="input-group-text">
                                 <i class="bi bi-envelope"></i>
                             </span>
-                            <input type="email"  name="email" id="email" placeholder="E-mail"
+                            <input type="email" name="email" id="email" placeholder="E-mail"
                                 class="form-control form-control-lg fs-6" />
                         </div>
 
@@ -84,7 +86,7 @@
         </div>
     </div>
 
-    <script src="assets/vendors/bootstrap5/js/bootstrap.bundle.min.js"></script>
+    <script src="<%= request.getContextPath() %>/assets/vendors/bootstrap5/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

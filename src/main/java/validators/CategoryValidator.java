@@ -25,7 +25,7 @@ public class CategoryValidator {
 
         if(id == null)
             error.append("O Campo id não foi enviado!<br/>");
-        else if(name.isEmpty())
+        else if(id.isEmpty())
             error.append("O Campo  está em branco!<br/>");
         else{
             try {
@@ -36,17 +36,9 @@ public class CategoryValidator {
                 error.append("ERRO: NUMERO DE ID INVALIDO!");
             }
         }
-
-        if(name==null)
-            error.append("O Campo nome não foi enviado!<br/>");
-        else if(name.isEmpty())
-            error.append("O Campo nome está em branco!<br/>");
-
-        if(description==null)
-            error.append("O Campo descrição não foi enviado!<br/>");
-        else if(description.isEmpty())
-            error.append("O Campo descrição está em branco!<br/>");
-
+        String errorValue = CategoryValidator.validate(name, description);
+        if(errorValue!=null)
+            error.append(errorValue);
 
         return (error.length()>0)? error.toString():null;
     }

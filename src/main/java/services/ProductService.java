@@ -134,9 +134,7 @@ public class ProductService implements Service<ProductModel> {
     }
 
     public int countProducts(){
-        int totalProducts = productDAO.countProduct();
-        System.out.println("NUM PRODUCTOS:"+totalProducts);
-        return totalProducts;
+        return productDAO.countProduct();
     }
 
     public Map<Date, Integer> getProductCountsByDate(){

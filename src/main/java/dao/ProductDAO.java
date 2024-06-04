@@ -22,7 +22,7 @@ public class ProductDAO implements DAO<ProductModel, Long> {
     }
 
     public Map<Date, Integer> getProductCountsByDate(){
-        String query = "SELECT created_at::date AS date, COUNT(*) AS count FROM product GROUP BY created_at::date ORDER BY created_at::date;";
+        String query = "SELECT created_at::date AS date, COUNT(*) AS count FROM products GROUP BY created_at::date ORDER BY created_at::date;";
         Map<Date, Integer> productCounts = new LinkedHashMap<>();
 
 
@@ -41,7 +41,7 @@ public class ProductDAO implements DAO<ProductModel, Long> {
 
     public int countProduct(){
         int result=0;
-        String query = "SELECT COUNT(*) FROM product;";
+        String query = "SELECT COUNT(*) FROM products;";
 
         try(PreparedStatement st = connection.prepareStatement(query); ResultSet rs = st.executeQuery()) {
             rs.next();
@@ -55,7 +55,7 @@ public class ProductDAO implements DAO<ProductModel, Long> {
 
     @Override
     public int save(ProductModel obj) {
-        String cmd = "INSERT INTO product(name, description, price, quantity, category_id, created_at) VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP);";
+        String cmd = "INSERT INTO products (name, description, price, quantity, category_id, created_at) VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP);";
         int rowAffecteds=0;
         try(PreparedStatement st = connection.prepareStatement(cmd)) {
             st.setString(1, obj.getName());
@@ -73,7 +73,7 @@ public class ProductDAO implements DAO<ProductModel, Long> {
 
     @Override
     public int update(ProductModel obj) {
-        String cmd = "UPDATE product SET name=?, description=? , price=?, quantity=?, category_id=? WHERE id=?;";
+        String cmd = "UPDATE products SET name=?, description=? , price=?, quantity=?, category_id=? WHERE id=?;";
         int rowAffecteds=0;
         try(PreparedStatement st = connection.prepareStatement(cmd)) {
             st.setString(1, obj.getName());
@@ -92,7 +92,7 @@ public class ProductDAO implements DAO<ProductModel, Long> {
 
     @Override
     public int delete(Long id) {
-        String cmd = "DELETE FROM product WHERE id=?;";
+        String cmd = "DELETE FROM products WHERE id=?;";
         int rowAffecteds=0;
         try(PreparedStatement st = connection.prepareStatement(cmd)) {
             st.setLong(1, id);
@@ -119,7 +119,7 @@ public class ProductDAO implements DAO<ProductModel, Long> {
                 "p.description as \"p_description\", p.price as \"p_price\", p.quantity as \"p_quantity\", " +
                 "p.created_at as \"p_created_at\", c.id as \"c_id\", c.name as \"c_name\", " +
                 "c.description as \"c_description\", c.created_at as \"c_created_at\" " +
-                "FROM product as p, category as c where p.category_id = c.id and p.id=? ;";
+                "FROM products as p, categories as c where p.category_id = c.id and p.id=? ;";
 
         try(PreparedStatement st = createFindByIdStatement(connection, query, id); ResultSet rs = st.executeQuery()) {
             if (rs.next())
@@ -138,7 +138,7 @@ public class ProductDAO implements DAO<ProductModel, Long> {
                                                 "p.description as \"p_description\", p.price as \"p_price\", p.quantity as \"p_quantity\", " +
                                                 "p.created_at as \"p_created_at\", c.id as \"c_id\", c.name as \"c_name\", " +
                                                 "c.description as \"c_description\", c.created_at as \"c_created_at\" " +
-                                                "FROM product as p, category as c where p.category_id = c.id ;";
+                                                "FROM products as p, categories as c where p.category_id = c.id ;";
 
         try(PreparedStatement st = connection.prepareStatement(query); ResultSet rs = st.executeQuery()) {
             while (rs.next())

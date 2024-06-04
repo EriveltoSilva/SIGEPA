@@ -18,10 +18,10 @@
             <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> 
-                        <a class="nav-link" href="<%= request.getContextPath() %>/user-register">Cadastrar Usuário</a>
+                        <a class="nav-link" href="<%= request.getContextPath() %>/accounts/register">Cadastrar Usuário</a>
                     </li>
                     <li class="nav-item"> 
-                        <a class="nav-link" href="<%= request.getContextPath() %>/user-list">Listar Usuários</a>
+                        <a class="nav-link" href="<%= request.getContextPath() %>/accounts/list">Listar Usuários</a>
                     </li>
                 </ul>
             </div>

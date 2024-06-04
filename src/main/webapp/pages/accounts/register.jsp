@@ -33,7 +33,12 @@
                                                 <p class="card-description">
                                                     <span class="badge-primary p-2 rounded">Novo</span> usuário.
                                                 </p>
-                                                <form method="post" action="" class="forms-sample">
+                                                <form method="post" action="<%=request.getContextPath()%>/accounts/register" class="forms-sample">
+                                                    <div class="form-group">
+                                                        <label for="exampleInputFullName">Nome Completo</label>
+                                                        <input type="text" name="fullName" class="form-control"
+                                                            id="exampleInputFullName" placeholder="Nome Completo">
+                                                    </div>
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1">Email</label>
                                                         <input type="email" name="email" class="form-control"
@@ -75,7 +80,7 @@
                                     </div>
 
                                     <div class="d-sm-none d-md-none col-12 col-sm-12 col-md-6 d-none d-lg-block d-lg-6">
-                                        <img class="w-100 h-100" src="assets/images/user.png" alt="Criar Usuário">
+                                        <img class="w-100 h-100" src="<%= request.getContextPath() %>/assets/images/user.png" alt="Criar Usuário">
                                     </div>
 
                                 </div>

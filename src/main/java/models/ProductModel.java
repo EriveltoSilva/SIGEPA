@@ -1,9 +1,8 @@
 package models;
 
-import jakarta.servlet.http.HttpServlet;
-
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Getter
@@ -11,7 +10,9 @@ import java.util.Date;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductModel extends HttpServlet {
+public class ProductModel implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private Long id;
     private String name;
     private String description;

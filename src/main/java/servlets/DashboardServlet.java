@@ -46,5 +46,9 @@ public class DashboardServlet extends HttpServlet {
         req.setAttribute("categoriesBar", categoryService.getCategoriesCountsByDate());
         getServletContext().getRequestDispatcher("/pages/administrator/dashboard.jsp").forward(req, resp);
     }
-    
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        this.doGet(req, resp);
+    }
 }

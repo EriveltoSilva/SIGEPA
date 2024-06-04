@@ -4,6 +4,7 @@
 
 <% int totalProducts=(int) request.getAttribute("totalProducts"); %>
 <% int totalCategories=(int) request.getAttribute("totalCategories"); %>
+
 <!DOCTYPE html>
 <html lang="pt-AO">
 

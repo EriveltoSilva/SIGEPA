@@ -2,6 +2,7 @@ package models;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Setter
@@ -9,7 +10,9 @@ import java.util.Date;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryModel {
+public class CategoryModel implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private Long id;
     private String name;
     private String description;
