@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.UserModel;
+import services.UserService;
 import validators.LoginValidator;
 import java.io.IOException;
 import java.sql.Connection;
@@ -16,6 +17,12 @@ import java.sql.SQLException;
 @WebServlet(name="LoginServlet", urlPatterns = {"/login"})
 public class LoginController extends HttpServlet {
     private final Connection connection = PostgresConnectionSingleton.getInstance().getConnection();
+    private final UserService userService;
+
+    public LoginController()
+    {
+        this.userService = new UserService(connection);
+    }
 
     @Override
     public void destroy() {
@@ -50,16 +57,16 @@ public class LoginController extends HttpServlet {
         }
 
         UserModel user = new UserModel(email, password);
-        if(!(user.getEmail().equals("eriveltoclenio@gmail.com") && user.getPassword().equals("a")))
+        if((user = userService.authenticateUser(user))==null)
         {
             req.setAttribute("errorMessage", "USUÁRIO INVÁLIDO!");
             this.doGet(req, resp);
             return;
         }
         req.getSession().setAttribute("user", user);
-        req.setAttribute("successMessage", "SEJA BEM VINDO");
+        req.setAttribute("successMessage", "BEM VINDO DE VOLTA \""+ user.getFullName()+"\"");
         String previousURL = req.getParameter("previousURL");
-        if(previousURL!=null && !previousURL.isEmpty()) {
+        if(previousURL!=null && !previousURL.isEmpty() && !previousURL.equals("null")) {
             resp.sendRedirect(req.getContextPath()+previousURL);
             return;
         }

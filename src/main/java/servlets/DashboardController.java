@@ -17,14 +17,14 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 @WebServlet(name ="DashboardServlet", urlPatterns = {"/home","/dashboard", "/admin"})
-public class DashboardServlet extends HttpServlet {
+public class DashboardController extends HttpServlet {
 
     private final Connection connection = PostgresConnectionSingleton.getInstance().getConnection();
     private final ProductService productService;
     private final CategoryService categoryService;
     private final UserService userService;
 
-    public DashboardServlet(){
+    public DashboardController() {
         this.userService = new UserService(this.connection);
         this.productService = new ProductService(this.connection);
         this.categoryService = new CategoryService(this.connection);

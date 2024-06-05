@@ -122,6 +122,19 @@ public class UserDAO implements DAO<UserModel, Long> {
         return user;
     }
 
+    public UserModel find(UserModel obj) {
+        UserModel user = null;
+        String query = "SELECT * FROM users where email=? and password=md5(?);";
+        try(PreparedStatement st = createFindStatement(connection, query, obj); ResultSet rs = st.executeQuery()) {
+            if (rs.next())
+                user = convertToModel(rs);
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return user;
+    }
+
     @Override
     public List<UserModel> findAll() {
         List<UserModel> list = new ArrayList<>();
@@ -134,6 +147,13 @@ public class UserDAO implements DAO<UserModel, Long> {
             throw new RuntimeException(e);
         }
         return list;
+    }
+
+    private PreparedStatement  createFindStatement(Connection connection, String query, UserModel obj) throws SQLException {
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setString(1, obj.getEmail());
+        ps.setString(2, obj.getPassword());
+        return ps;
     }
 
     private PreparedStatement  createFindByIdStatement(Connection connection, String query, Long id) throws SQLException {
