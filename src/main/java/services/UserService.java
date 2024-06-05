@@ -132,7 +132,7 @@ public class UserService implements Service<UserModel> {
         return userDAO.countUsers();
     }
 
-    public Map<Date, Integer> getCategoriesCountsByDate(){
+    public Map<Date, Integer> getUsersCountsByDate(){
         return userDAO.getUsersCountsByDate();
     }
 }

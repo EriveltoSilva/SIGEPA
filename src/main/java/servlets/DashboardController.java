@@ -43,12 +43,13 @@ public class DashboardController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/html");
-        System.out.println("GETTING DASHBOARD...");
         req.setAttribute("totalUsers", userService.countUsers());
+        req.setAttribute("usersBar", userService.getUsersCountsByDate());
+
         req.setAttribute("totalProducts", productService.countProducts());
-        req.setAttribute("totalCategories", categoryService.countCategories());
         req.setAttribute("productsBar", productService.getProductCountsByDate());
+
+        req.setAttribute("totalCategories", categoryService.countCategories());
         req.setAttribute("categoriesBar", categoryService.getCategoriesCountsByDate());
         getServletContext().getRequestDispatcher("/pages/administrator/dashboard.jsp").forward(req, resp);
     }

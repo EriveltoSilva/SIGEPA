@@ -38,15 +38,11 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/html");
-        System.out.println("GETTING LOGIN...");
         req.getRequestDispatcher("/index.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        System.out.println("POSTTING LOGIN...");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
 
@@ -59,7 +55,7 @@ public class LoginController extends HttpServlet {
         UserModel user = new UserModel(email, password);
         if((user = userService.authenticateUser(user))==null)
         {
-            req.setAttribute("errorMessage", "USUÁRIO INVÁLIDO!");
+            req.setAttribute("errorMessage", "CREDENCIAIS INVÁLIDAS!");
             this.doGet(req, resp);
             return;
         }
