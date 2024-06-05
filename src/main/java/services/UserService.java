@@ -44,11 +44,14 @@ public class UserService implements Service<UserModel> {
         try {
             long id = Long.parseLong(req.getParameter("id"));
             UserModel user = userDAO.findById(id);
-            if(user==null)
+            if(user==null) {
                 req.setAttribute("errorMessage", "Erro: Usuário de edição não existe!");
+                req.getRequestDispatcher("/accounts/list").forward(req,resp);
+                return;
+            }
 
             req.setAttribute("user", user);
-            req.getRequestDispatcher("/pages/user/user-edit.jsp").forward(req,resp);
+            req.getRequestDispatcher("/pages/accounts/user-edit.jsp").forward(req,resp);
         }
         catch (NumberFormatException e)
         {
@@ -109,7 +112,7 @@ public class UserService implements Service<UserModel> {
         if(userDAO.update(new UserModel(idNumber, fullName.trim(), email.trim(), username.trim(), password))==0)
             req.setAttribute("errorMessage", "Algo deu errado, usuário não gravada! Tente mais tarde!");
         else
-            req.setAttribute("successMessage", "Usuário gravada com sucesso!");
+            req.setAttribute("successMessage", "Usuário gravado com sucesso!");
         resp.sendRedirect(req.getContextPath() + "/accounts/list");
     }
 
