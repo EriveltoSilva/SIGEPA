@@ -26,7 +26,7 @@
                         <i class="typcn typcn-cog-outline text-primary"></i>
                         Perfil
                     </a>
-                    <a class="dropdown-item">
+                    <a class="dropdown-item" href="<%= request.getContextPath() %>/accounts/logout">
                         <i class="typcn typcn-eject text-primary"></i>
                         Logout
                     </a>

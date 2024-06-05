@@ -12,13 +12,12 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-@WebServlet(name = "UserController", urlPatterns = {"/accounts/register", "/accounts/list", "/accounts/delete", "/accounts/user-edit"})
+@WebServlet(name = "UserController", urlPatterns = {"/accounts/register","/accounts/logout" ,"/accounts/list", "/accounts/delete", "/accounts/user-edit"})
 public class UserController extends HttpServlet {
     private final Connection connection = PostgresConnectionSingleton.getInstance().getConnection();
     private final UserService userService;
 
     public UserController(){
-
         this.userService = new UserService(connection);
     }
 
@@ -38,6 +37,7 @@ public class UserController extends HttpServlet {
         String command = req.getServletPath();
         switch (command){
             case "/accounts/register": userService.getRegister(req, resp);break;
+            case "/accounts/logout": userService.logout(req, resp);break;
             case "/accounts/list": userService.getList(req, resp);break;
             case "/accounts/user-edit": userService.getEdit(req, resp);break;
         }
@@ -48,6 +48,7 @@ public class UserController extends HttpServlet {
         String command = req.getServletPath();
         switch (command){
             case "/accounts/register": userService.save(req, resp);break;
+            case "/accounts/logout": userService.logout(req, resp);break;
             case "/accounts/user-edit": userService.update(req, resp);break;
             case "/accounts/delete": userService.delete(req, resp);break;
         }

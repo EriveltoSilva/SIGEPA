@@ -14,7 +14,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 
-@WebServlet(name="LoginServlet", urlPatterns = {"/login"})
+@WebServlet(name="LoginServlet", urlPatterns = {"/login", "/accounts/login"})
 public class LoginController extends HttpServlet {
     private final Connection connection = PostgresConnectionSingleton.getInstance().getConnection();
     private final UserService userService;
@@ -38,6 +38,7 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String command = req.getServletPath();
         req.getRequestDispatcher("/index.jsp").forward(req, resp);
     }
 
@@ -62,7 +63,7 @@ public class LoginController extends HttpServlet {
         req.getSession().setAttribute("user", user);
         req.setAttribute("successMessage", "BEM VINDO DE VOLTA \""+ user.getFullName()+"\"");
         String previousURL = req.getParameter("previousURL");
-        if(previousURL!=null && !previousURL.isEmpty() && !previousURL.equals("null")) {
+        if(previousURL!=null && !previousURL.isEmpty() && !previousURL.equals("null") && !previousURL.equals("/index.jsp")) {
             resp.sendRedirect(req.getContextPath()+previousURL);
             return;
         }

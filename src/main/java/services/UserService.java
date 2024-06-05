@@ -21,6 +21,12 @@ public class UserService implements Service<UserModel> {
         this.userDAO = new UserDAO(connection);
     }
 
+    public void logout(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getSession().invalidate();
+        req.setAttribute("successMessage", "Sucesso no logout. Volte Sempre!");
+        req.getRequestDispatcher("/login").forward(req, resp);
+    }
+
     public void getRegister(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("GETTING USER REGISTER...");
         req.getRequestDispatcher("/pages/accounts/register.jsp").forward(req, resp);
