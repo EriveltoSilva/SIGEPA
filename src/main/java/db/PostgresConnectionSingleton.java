@@ -44,7 +44,6 @@ public class PostgresConnectionSingleton implements ConnectionDB {
         return this.connection;
     }
 
-    @Override
     public void close() {
         if (connection!=null){
             try {

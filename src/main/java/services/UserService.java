@@ -124,7 +124,7 @@ public class UserService implements Service<UserModel> {
         resp.sendRedirect(req.getContextPath() + "/accounts/list");
     }
 
-    public int countCategories(){
+    public int countUsers(){
         return userDAO.countUsers();
     }
 

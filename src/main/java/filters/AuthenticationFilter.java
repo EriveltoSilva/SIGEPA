@@ -38,11 +38,10 @@ public class AuthenticationFilter implements Filter {
 
         UserModel user = (UserModel) session.getAttribute("user");
         if (user == null) {
-            System.out.println("ENTOUR....");
             request.setAttribute("errorMessage", "Você não se encontra logado! Faça login por favor!-");
             request.setAttribute("previousURL", route);
-            //request.getRequestDispatcher("/login").forward(request,response);
-            request.getRequestDispatcher("/index.jsp?").forward(req, resp);
+            request.getRequestDispatcher("/login").forward(request,response);
+            //request.getRequestDispatcher("/index.jsp").forward(req, resp);
             return;
         }
 

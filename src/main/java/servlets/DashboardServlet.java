@@ -1,13 +1,16 @@
 package servlets;
 
 import db.PostgresConnectionSingleton;
+
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import services.CategoryService;
 import services.ProductService;
+import services.UserService;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -19,8 +22,10 @@ public class DashboardServlet extends HttpServlet {
     private final Connection connection = PostgresConnectionSingleton.getInstance().getConnection();
     private final ProductService productService;
     private final CategoryService categoryService;
+    private final UserService userService;
 
     public DashboardServlet(){
+        this.userService = new UserService(this.connection);
         this.productService = new ProductService(this.connection);
         this.categoryService = new CategoryService(this.connection);
     }
@@ -40,8 +45,9 @@ public class DashboardServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
         System.out.println("GETTING DASHBOARD...");
-        req.setAttribute("totalCategories", categoryService.countCategories());
+        req.setAttribute("totalUsers", userService.countUsers());
         req.setAttribute("totalProducts", productService.countProducts());
+        req.setAttribute("totalCategories", categoryService.countCategories());
         req.setAttribute("productsBar", productService.getProductCountsByDate());
         req.setAttribute("categoriesBar", categoryService.getCategoriesCountsByDate());
         getServletContext().getRequestDispatcher("/pages/administrator/dashboard.jsp").forward(req, resp);

@@ -4,6 +4,7 @@
 
 <% int totalProducts=(int) request.getAttribute("totalProducts"); %>
 <% int totalCategories=(int) request.getAttribute("totalCategories"); %>
+<% int totalUsers=(int) request.getAttribute("totalUsers"); %>
 
 <!DOCTYPE html>
 <html lang="pt-AO">
@@ -71,7 +72,8 @@
                                                 style="width: 80px; height: 80px;">
                                             <div class="ms-3">
                                                 <p class="mb-2">Total de Usuários</p>
-                                                <h6 class="mb-0">---</h6>
+
+                                                <h6 class="mb-0"><%=totalUsers %></h6>
                                             </div>
                                         </div>
                                     </div>
@@ -83,7 +85,7 @@
                                 
                                 
                                 
-                                <h2 class="text-titlecase mt-4 h5"> Quand. de Productos/Dia</h2>
+                                <h2 class="text-titlecase mt-4 h5"> Quant. de Productos/Dia</h2>
                                 <div class="row">
                                     <div class="col-lg-6 grid-margin stretch-card">
                                         <div class="card">
@@ -103,7 +105,7 @@
                                     </div>
                                 </div>
 
-                                <h2 class="text-titlecase mt-4 h5"> Quand. de Categorias Criadas/Dia</h2>
+                                <h2 class="text-titlecase mt-4 h5"> Quant. de Categorias Criadas/Dia</h2>
                                 <div class="row">
                                     <div class="col-lg-6 grid-margin stretch-card">
                                         <div class="card">
@@ -193,7 +195,7 @@
             var dataTotalProducts = {
                 labels: labelsProductBar,
                 datasets: [{
-                    label: '# of Votes',
+                    label: '# Productos inseridos no dia',
                     data: dataProductBar,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
@@ -219,7 +221,7 @@
             var dataTotalCategory = {
                 labels: labelsCategoryBar,
                 datasets: [{
-                    label: '# of Votes',
+                    label: '# Categorias inseridos no dia',
                     data: dataCategoryBar,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',

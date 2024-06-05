@@ -1,8 +1,8 @@
 package interfaces;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public interface ConnectionDB {
-    Connection getConnection() ;
-    void close();
+    Connection getConnection()  throws SQLException;
 }
