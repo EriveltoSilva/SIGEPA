@@ -40,7 +40,6 @@ public class UserService implements Service<UserModel> {
     }
 
     public void getEdit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("GETTING USER EDIT...");
         try {
             long id = Long.parseLong(req.getParameter("id"));
             UserModel user = userDAO.findById(id);
@@ -55,17 +54,14 @@ public class UserService implements Service<UserModel> {
         }
         catch (NumberFormatException e)
         {
-            System.err.println("Erro: Falha ao converter o id da user em int:"+e.getMessage());
+            System.err.println("Erro: Falha ao converter o id do user em long:"+e.getMessage());
             req.setAttribute("errorMessage", "Erro editando a usuário, tente mais tarde!");
             req.getRequestDispatcher("/accounts/user-edit").forward(req, resp);
-            //resp.sendRedirect(req.getContextPath()+"/user-list");
         }
-        //req.getRequestDispatcher("/pages/user/user-list.jsp").forward(req, resp);
         resp.sendRedirect(req.getContextPath()+"/accounts/list");
     }
 
     public void save(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("POSTTING USER REGISTER...");
         String fullName = req.getParameter("fullName");
         String email = req.getParameter("email");
         String username = req.getParameter("username");
@@ -89,7 +85,6 @@ public class UserService implements Service<UserModel> {
     }
 
     public void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("POSTTING USER EDIT...");
         String id = req.getParameter("id");
         String fullName = req.getParameter("fullName");
         String email = req.getParameter("email");
@@ -117,7 +112,6 @@ public class UserService implements Service<UserModel> {
     }
 
     public void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("POSTTING USER DELETE...");
         try {
             long id = Integer.parseInt(req.getParameter("id"));
             if(userDAO.delete(id)==0)
