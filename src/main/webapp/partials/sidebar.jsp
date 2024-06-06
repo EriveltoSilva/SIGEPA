@@ -1,14 +1,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%
+    boolean isAdmin = sessionUser != null && "ADMIN".equals(sessionUser.getUserType());
+%>
+
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
         <li class="nav-item">
             <a class="nav-link" href="<%= request.getContextPath() %>/dashboard">
                 <i class="typcn typcn-device-desktop menu-icon"></i>
-                <span class="menu-title">Dashboard</span>
+                <span class="menu-title">Dashboard </span>
             </a>
         </li>
 
-
+        <%if(isAdmin){ %>
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic" >
                 <i class="bi bi-person-plus menu-icon"></i>
@@ -26,6 +31,7 @@
                 </ul>
             </div>
         </li>
+        
 
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#form-category" aria-expanded="false" aria-controls="form-category">
@@ -44,6 +50,7 @@
                 </ul>
             </div>
         </li>
+        <% } %>
         
         
         <li class="nav-item">
