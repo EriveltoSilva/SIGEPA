@@ -52,6 +52,14 @@
                                                     </div>
 
                                                     <div class="form-group">
+                                                        <label for="exampleInputUsername1">Tipo</label>
+                                                        <select  name="type" class="form-control">
+                                                            <option value="ADMIN"> Administrador</option>
+                                                            <option value="NORMAL" selected> Normal</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group">
                                                         <label for="exampleInputPassword1">Palavra-passe</label>
                                                         <input type="password" name="password" class="form-control"
                                                             id="exampleInputPassword1" placeholder="Palavra-passe">

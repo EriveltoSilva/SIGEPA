@@ -49,6 +49,7 @@ public class UserController extends HttpServlet {
         switch (command){
             case "/accounts/register": userService.save(req, resp);break;
             case "/accounts/logout": userService.logout(req, resp);break;
+            case "/accounts/list": this.doGet(req, resp);break;
             case "/accounts/user-edit": userService.update(req, resp);break;
             case "/accounts/delete": userService.delete(req, resp);break;
         }

@@ -40,6 +40,8 @@ public class UserService implements Service<UserModel> {
     }
 
     public void getEdit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/html");
+        System.out.println("GETTING USER EDIT");
         try {
             long id = Long.parseLong(req.getParameter("id"));
             UserModel user = userDAO.findById(id);
@@ -48,7 +50,7 @@ public class UserService implements Service<UserModel> {
                 req.getRequestDispatcher("/accounts/list").forward(req,resp);
                 return;
             }
-
+            System.out.println("Utilizador edit:"+user.toString());
             req.setAttribute("user", user);
             req.getRequestDispatcher("/pages/accounts/user-edit.jsp").forward(req,resp);
         }
@@ -67,8 +69,9 @@ public class UserService implements Service<UserModel> {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         String confirmationPassword = req.getParameter("confirmationPassword");
+        String type = req.getParameter("type");
 
-        String errorMessage = UserValidator.registerValidate(fullName,email, username, password, confirmationPassword);
+        String errorMessage = UserValidator.registerValidate(fullName,email, username, password, confirmationPassword, type);
 
         if(errorMessage!=null){
             req.setAttribute("errorMessage", errorMessage);
@@ -76,7 +79,7 @@ public class UserService implements Service<UserModel> {
             return ;
         }
 
-        if(userDAO.save(new UserModel(fullName.trim(), email.trim(), username.trim(), password))==0)
+        if(userDAO.save(new UserModel(fullName.trim(), email.trim(), username.trim(), password, type))==0)
             req.setAttribute("errorMessage", "Algo deu errado, usuário não gravada! Tente mais tarde!");
         else
             req.setAttribute("successMessage", "Usuário gravada com sucesso!");
@@ -85,17 +88,20 @@ public class UserService implements Service<UserModel> {
     }
 
     public void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("POST USER EDIT..");
         String id = req.getParameter("id");
         String fullName = req.getParameter("fullName");
         String email = req.getParameter("email");
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         String confirmationPassword = req.getParameter("confirmationPassword");
+        String type = req.getParameter("type");
 
-        String errorMessage = UserValidator.validateEdit(id, fullName, email, username, password, confirmationPassword);
+        String errorMessage = UserValidator.validateEdit(id, fullName, email, username, password, confirmationPassword, type);
 
         if(errorMessage!=null){
             req.setAttribute("errorMessage", errorMessage);
+            System.out.println("ERROV VALIDANDO CAMPOS DE EDIÇÃO:"+errorMessage);
             if(id!=null)
                 resp.sendRedirect(req.getContextPath()+"/accounts/user-edit?id="+id);
             else
@@ -104,11 +110,12 @@ public class UserService implements Service<UserModel> {
         }
 
         long idNumber = Long.parseLong(id);
-        if(userDAO.update(new UserModel(idNumber, fullName.trim(), email.trim(), username.trim(), password))==0)
+        if(userDAO.update(new UserModel(idNumber, fullName.trim(), email.trim(), username.trim(), password, type))==0)
             req.setAttribute("errorMessage", "Algo deu errado, usuário não gravada! Tente mais tarde!");
         else
             req.setAttribute("successMessage", "Usuário gravado com sucesso!");
-        resp.sendRedirect(req.getContextPath() + "/accounts/list");
+        req.getRequestDispatcher("/accounts/list").forward(req, resp);
+        //resp.sendRedirect(req.getContextPath() + "/accounts/list");
     }
 
     public void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

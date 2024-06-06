@@ -54,14 +54,15 @@ public class UserDAO implements DAO<UserModel, Long> {
 
     @Override
     public int save(UserModel obj) {
-        String cmd = "INSERT INTO users( full_name, email, username, password, created_at)\n" +
-                "    VALUES (?, ?, ?,md5(?), CURRENT_TIMESTAMP);";
+        String cmd = "INSERT INTO users( full_name, email, username, password, created_at, type)\n" +
+                "    VALUES (?, ?, ?,md5(?), CURRENT_TIMESTAMP, ?);";
         int rowAffecteds=0;
         try(PreparedStatement st = connection.prepareStatement(cmd)) {
             st.setString(1, obj.getFullName());
             st.setString(2, obj.getEmail());
             st.setString(3, obj.getUsername());
             st.setString(4, obj.getPassword());
+            st.setString(5, obj.getUserType());
             rowAffecteds = st.executeUpdate();
         }
         catch (SQLException e) {
@@ -72,14 +73,15 @@ public class UserDAO implements DAO<UserModel, Long> {
 
     @Override
     public int update(UserModel obj) {
-        String cmd = "UPDATE users SET full_name =?, email=?, username=? , password=md5(?) WHERE id=?;";
+        String cmd = "UPDATE users SET full_name =?, email=?, username=? , password=md5(?), type=? WHERE id=?;";
         int rowAffecteds=0;
         try(PreparedStatement st = connection.prepareStatement(cmd)) {
             st.setString(1, obj.getFullName());
             st.setString(2, obj.getEmail());
             st.setString(3, obj.getUsername());
             st.setString(4, obj.getPassword());
-            st.setLong(5, obj.getId());
+            st.setString(5, obj.getUserType());
+            st.setLong(6, obj.getId());
             rowAffecteds = st.executeUpdate();
         }
         catch (SQLException e) {
@@ -105,7 +107,8 @@ public class UserDAO implements DAO<UserModel, Long> {
     @Override
     public UserModel convertToModel(ResultSet rs) throws SQLException {
         return new UserModel(rs.getLong("id"), rs.getString("full_name"),
-                rs.getString("email"),rs.getString("username"),rs.getString("password"), rs.getTimestamp("created_at"));
+                rs.getString("email"),rs.getString("username"),
+                rs.getString("password"), rs.getTimestamp("created_at"), rs.getString("type"));
     }
 
     @Override

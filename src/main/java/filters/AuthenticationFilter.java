@@ -31,7 +31,8 @@ public class AuthenticationFilter implements Filter {
 
         String route = request.getServletPath();
 
-        if (route.equals("/login")) {
+        // Se o utilizador pedir a pagina de login, ou um recurso em assets
+        if (route.equals("/login") || route.contains("/assets/")) {
             chain.doFilter(req, resp);
             return ;
         }

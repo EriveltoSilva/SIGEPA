@@ -49,6 +49,7 @@
                                                         <tr>
                                                             <th>Usuário</th>
                                                             <th>Nome</th>
+                                                            <th>Tipo</th>
                                                             <th>E-mail</th>
                                                             <th>Criado a </th>
                                                             <th>Acções</th>
@@ -65,6 +66,7 @@
                                                                     src="<%=request.getContextPath()%>/assets/images/user.png" alt="Imagens padrão de perfil" />
                                                             </td>
                                                             <td><%=user.getFullName() %></td>
+                                                            <td><%=user.getUserType() %></td>
                                                             <td><%=user.getEmail() %></td>
                                                             <td><%=user.getCreated_at() %></td>
                         

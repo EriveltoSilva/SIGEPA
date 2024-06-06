@@ -19,6 +19,7 @@ public class UserModel implements Serializable {
     private String username;
     private String password;
     private Date created_at;
+    private String userType;
 
     public UserModel(String email, String password)
     {
@@ -26,16 +27,18 @@ public class UserModel implements Serializable {
         this.password = password;
     }
 
-    public UserModel(String fullName, String email, String username, String password)
+    public UserModel(String fullName, String email, String username, String password, String userType)
     {
         this(email,password);
         this.fullName = fullName;
         this.username = username;
+        this.userType = userType;
     }
 
-    public UserModel(Long id, String fullName, String email, String username, String password)
+    public UserModel(Long id, String fullName, String email, String username, String password, String userType)
     {
-        this(fullName,email, username, password);
+        this(fullName,email, username, password, userType);
         this.id = id;
     }
+
 }

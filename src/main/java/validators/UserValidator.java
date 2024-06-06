@@ -3,7 +3,7 @@ package validators;
 public class UserValidator {
 
 
-    public static String registerValidate(String fullName, String email, String username, String password, String confirmationPassword)
+    public static String registerValidate(String fullName, String email, String username, String password, String confirmationPassword, String type)
     {
         StringBuilder error = new StringBuilder();
         if(fullName==null)
@@ -20,6 +20,11 @@ public class UserValidator {
             error.append("O Campo username não foi enviado!<br/>");
         else if(username.isEmpty())
             error.append("O Campo username está em branco!<br/>");
+
+        if(type==null)
+            error.append("O Campo Tipo não foi enviado!<br/>");
+        else if(type.isEmpty())
+            error.append("O Campo Tipo está em branco!<br/>");
 
         if(password==null)
             error.append("O Campo password não foi enviado!<br/>");
@@ -41,7 +46,7 @@ public class UserValidator {
         return (error.length()>0)? error.toString():null;
     }
 
-    public static String validateEdit(String id, String fullName, String email, String username, String password, String confirmationPassword)
+    public static String validateEdit(String id, String fullName, String email, String username, String password, String confirmationPassword, String type)
     {
         StringBuilder error = new StringBuilder();
 
@@ -59,7 +64,7 @@ public class UserValidator {
             }
         }
 
-        String errorValue = UserValidator.registerValidate(fullName, email, username, password, confirmationPassword);
+        String errorValue = UserValidator.registerValidate(fullName, email, username, password, confirmationPassword, type);
         if(errorValue!=null)
             error.append(errorValue);
 

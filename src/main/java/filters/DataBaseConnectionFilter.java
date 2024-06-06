@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 import db.PostgresConnectionFactory;
 
-@WebFilter(filterName = "DataBaseConnectionFilter", urlPatterns = {"/*"})
+@WebFilter(filterName = "DataBaseConnectionFilter", urlPatterns = {"/database/*"})
 public class DataBaseConnectionFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
